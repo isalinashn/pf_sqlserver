@@ -1,0 +1,124 @@
+version: '3.0'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    container_name: PF_SQLSERVER2
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+#    volumes:
+#      - pf_db_mssql:/var/opt/mssql 
+  rest:
+    depends_on:
+      - db
+    container_name: PF_REST_SQLSERVER
+    build:
+      context: .
+      target: ${STAGE}
+      dockerfile: ./Dockerfile
+    ports:
+      - ${REST_PORT}:${REST_PORT}
+#    volumes:
+#      - .:/app/
+      #- pf_rest_data:/app/
+#volumes:
+#  pf_db_mysql:
+#  pf_rest_data:
+
+
+
+#version: '3.0'
+#services:
+#  db:
+#    image: postgres:latest
+#    container_name: PF_PostGres
+#    restart: always
+#    ports:
+#      - ${DB_PORT}:${DB_PORT}
+#    environment:
+#      - POSTGRES_PASSWORD = C0ntrol1*
+#      - POSTGRES_USER = Lotificadora
+#      - POSTGRES_DB = Lotificadora
+#    volumes:
+#      - .:/var/lib/postgresql
+
+
+# Ejemplo SQL Server
+#version: '1.0'
+#services:
+#  db:
+#    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+#    container_name: PF_SQLSERVER
+#    ports:
+#      - ${DB_PORT}:${DB_PORT}
+#    environment:
+#      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+#      - ACCEPT_EULA=Y
+#      - MSSQL_PID=Developer
+#    volumes:
+#      - pf_db_mssql:/var/opt/mssql 
+
+
+
+# Ejemplo Postgres
+#version: '3'
+#services:
+#  db:
+#    image: postgres:latest
+#    container_name: PF_PostGres
+#    restart: always
+#    ports:
+#      - 5432:5432
+#    environment:
+#      - POSTGRES_PASSWORD = C0ntrol1*
+#      - POSTGRES_USER = Lotificadora
+#      - POSTGRES_DB = Lotificadora
+    #volumes:
+      #- ./:/var/lib/postgresql
+      #- pf-postgresdb:/var/lib/postgresql/data
+
+# Ejemplo SQL Server
+#version: '3.5'
+#services:
+#  db:
+#    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+#    container_name: PF_SQLSERVER
+#    ports:
+#      - ${DB_PORT}:${DB_PORT}
+#    environment:
+#      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+#      - ACCEPT_EULA=Y
+#      - MSSQL_PID=Developer
+#    volumes:
+#      - pf_db_mssql:/var/opt/mssql 
+
+# Ejemplo MySQL
+#version: "3.9"
+#services:
+#  db:
+#    image: mysql
+#    container_name: pf-mysql
+#    restart: always
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=C0ntrol1*
+#    volumes:
+#      - pf_db_mysql:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+
+
+#version: '3.1'
+#services:
+#  db:
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_PASSWORD: C0ntrol1*
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
